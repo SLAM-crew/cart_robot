@@ -1,0 +1,52 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="cart_robot">
+
+    <xacro:macro name="wheel" params="side x y z signY signX r l">
+
+        <link name='wheel_${side}_link'>
+            <visual name='wheel_${side}_visual'>
+
+            <origin xyz="0 0 ${l/2*signY}" rpy="0 0 0"/> 
+                <geometry>
+                    <cylinder length="${l}" radius="${r}"/>
+                </geometry>
+                <material name="red"/>
+            </visual>
+
+            <xacro:inertial_cylinder mass="5" length="${l}" radius="${r}">
+                <origin xyz="0 0 ${l/2*signY}" rpy="0 0 0"/>
+            </xacro:inertial_cylinder>
+
+            <collision>
+               <origin xyz="0 0 ${l/2*signY}" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${l}" radius="${r}"/>
+                </geometry>
+            </collision>
+
+        </link>
+        
+        <joint name="wheel_${side}_joint" type="continuous">
+            <origin xyz="${x*signX} ${y*signY} ${-0.15/2}" rpy="1.57 0 0"/>
+            <axis xyz="0 0 1" />
+            <limit effort="50" velocity="100"/>
+            <joint_properties damping="0.5" friction="0.1"/>
+
+            <child link="wheel_${side}_link"/>
+            <parent link="base_link"/>
+        </joint>
+
+
+        <transmission name="wheel_${side}_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="wheel_${side}_joint">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="wheel_${side}_motor">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+    </xacro:macro>
+</robot>

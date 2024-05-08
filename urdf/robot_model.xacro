@@ -1,0 +1,107 @@
+<?xml version='1.0'?>
+<robot name="cart_robot" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+<xacro:property name="side" value="right"/>
+
+<xacro:include filename="$(find my_robot_simulation_control)/urdf/materials.xacro" />
+<xacro:include filename="$(find my_robot_simulation_control)/urdf/wheel.xacro" />
+<xacro:include filename="$(find my_robot_simulation_control)/urdf/inertial.urdf.xacro" />
+<xacro:include filename="$(find my_robot_simulation_control)/urdf/setup.gazebo" />
+
+<!-- cart_robot -->
+<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+
+    <link name="base_footprint"/>
+    <joint name="base_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0.0102"/>
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+    </joint>
+
+    <link name='base_link'>
+
+        <visual name='base_visual'>
+        <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/> 
+        <geometry>
+        <box size="0.5 0.25 0.15 "/>
+        </geometry>
+        <material name="blue"/>
+        </visual>
+        
+        <xacro:inertial_box mass="2" x="0.5" y="0.25" z="0.15" >
+            <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
+        </xacro:inertial_box>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <box size="0.5 0.25 0.15"/>
+                </geometry>
+        </collision>
+
+    </link>
+
+    <link name='camera'>
+        <visual name='camera_visual'>
+        <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+        <geometry>
+            <box size=".05 .05 .05"/>
+        </geometry>
+        <material name="grey"/>
+        </visual>
+    </link>
+    
+    <joint type="fixed" name="camera_joint">
+        <origin xyz="0.10 0 0.15" rpy="0 0 0"/>
+        <child link="camera"/>
+        <parent link="base_link"/>
+    </joint>
+
+    <link name="lidar">
+        <visual name='lidar_visual'>
+            <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+            <geometry>
+                <box size=".05 .05 .05"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+    </link>
+    <joint name="lidar_joint" type="fixed">
+        <origin xyz="0.10 0 0.15" rpy="0 0 1.570796"/>
+        <child link="lidar"/>
+        <parent link="base_link"/>
+    </joint>
+
+  <!-- Define the IMU SENSOR -->
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.01" />
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size="0.02 0.02 0.02" />
+      </geometry>
+      <material name="white" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.02 0.02 0.02" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="imu_link" />
+    <origin xyz="0.25 0 0.1" rpy="0 0 0" />
+  </joint>
+
+    <xacro:wheel side="up_left" x="0.25" y="0.125" z="0" signY="1" signX="1" r = "0.055" l = "0.044" /> 
+    <xacro:wheel side="up_right" x="0.25" y="0.125" z="0" signY="-1" signX="1" r = "0.055" l = "0.044" />
+    
+    <xacro:wheel side="down_left" x="0.25" y="0.125" z="0" signY="1" signX="-1" r = "0.055" l = "0.044" /> 
+    <xacro:wheel side="down_right" x="0.25" y="0.125" z="0" signY="-1" signX="-1" r = "0.055" l = "0.044" /> 
+
+    
+</robot>
