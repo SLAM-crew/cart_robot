@@ -10,7 +10,6 @@ class CartRobotControl:
     def __init__(self):
         rospy.init_node('lidar_processing_node', anonymous=True)
         rospy.Subscriber("/cart_robot/lidar_main", LaserScan, self.lidar_callback)
-        rospy.Subscriber('/cart_robot/imu', Imu, self.imu_callback)
 
         self.up_right_wheel_controller = rospy.Publisher('/cart_robot/up_right_wheel_controller/command', Float64, queue_size=1)
         self.up_left_wheel_controller = rospy.Publisher('/cart_robot/up_left_wheel_controller/command', Float64, queue_size=1)
@@ -18,7 +17,6 @@ class CartRobotControl:
         self.down_right_wheel_controller = rospy.Publisher('/cart_robot/down_right_wheel_controller/command', Float64, queue_size=1)
         self.down_left_wheel_controller = rospy.Publisher('/cart_robot/down_left_wheel_controller/command', Float64, queue_size=1)
 
-        self.odometry_publisher = rospy.Publisher('/cart_robot/odometry', Odometry, queue_size=1)
         self.linear_velocity = Vector3()
         self.position = Point()
         self.last_time = rospy.Time.now()
@@ -46,32 +44,6 @@ class CartRobotControl:
         else:
             rospy.loginfo("No object detected in laser zone.")
             self.move_forward()
-
-    # TODO: calculate linear velocity vector and position point
-    def imu_callback(self, data):
-        current_time = rospy.Time.now()
-        dt = (current_time - self.last_time).to_sec()
-
-        pose = Pose()
-        pose.position = self.position
-        pose.orientation = data.orientation
-
-        twist = Twist()
-        twist.angular = data.angular_velocity
-        twist.linear = self.linear_velocity
-
-        poseCov = PoseWithCovariance()
-        poseCov.pose = pose
-
-        twistCov = TwistWithCovariance()
-        twistCov.twist = twist
-
-        odometry = Odometry()
-        odometry.pose = poseCov
-        odometry.twist = twistCov
-
-        self.odometry_publisher.publish(odometry)
-        self.last_time = current_time
             
 def main():
     try:
