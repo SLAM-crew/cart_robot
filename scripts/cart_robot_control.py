@@ -2,9 +2,6 @@
 import rospy
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import Float64
-from sensor_msgs.msg import Imu
-from nav_msgs.msg import Odometry
-from geometry_msgs.msg import Twist, Pose, TwistWithCovariance, PoseWithCovariance, Vector3, Point
 
 class CartRobotControl:
     def __init__(self):
@@ -16,10 +13,6 @@ class CartRobotControl:
 
         self.down_right_wheel_controller = rospy.Publisher('/cart_robot/down_right_wheel_controller/command', Float64, queue_size=1)
         self.down_left_wheel_controller = rospy.Publisher('/cart_robot/down_left_wheel_controller/command', Float64, queue_size=1)
-
-        self.linear_velocity = Vector3()
-        self.position = Point()
-        self.last_time = rospy.Time.now()
 
     def move_forward(self):
         joint_speed = 5.0  
