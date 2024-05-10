@@ -6,12 +6,10 @@
         <remap from="/joint_states" to="/cart_robot/joint_states" />
     </node> 
 
-    <include file="$(find my_robot_simulation_control)/launch/robot_localization_start.launch" />
-
-    <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
         <rosparam command="load" file="$(find my_robot_simulation_control)/config/ekf_localization.yaml" />
         <remap from="/odometry/filtered" to="/odom" />
-    </node> -->
+    </node>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(find my_robot_simulation_control)/worlds/walls.world"/>
