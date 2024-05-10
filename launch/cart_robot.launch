@@ -14,7 +14,8 @@
     <include file="$(find my_robot_simulation_control)/launch/orb_slam2.launch" />
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find my_robot_simulation_control)/worlds/outdoor.world"/>
+        <!-- don't forget to select the world to run! -->
+        <arg name="world_name" value="$(find my_robot_simulation_control)/worlds/inspection.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
