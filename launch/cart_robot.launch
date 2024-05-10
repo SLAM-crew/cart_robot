@@ -11,8 +11,10 @@
         <remap from="/odometry/filtered" to="/odom" />
     </node>
 
+    <include file="$(find my_robot_simulation_control)/launch/orb_slam2.launch" />
+
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find my_robot_simulation_control)/worlds/walls.world"/>
+        <arg name="world_name" value="$(find my_robot_simulation_control)/worlds/outdoor.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
@@ -21,7 +23,7 @@
     </include>
 
     <node name="my_robot_model_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
-    args="-urdf -param robot_description -model my_robot_model" />
+    args="-urdf -param robot_description -model my_robot_model -x 1 -y 1 -z 0.2"/>
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_conf_file)" />
     <rosparam file="$(find my_robot_simulation_control)/config/diff_control.yaml" command="load"/>
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
