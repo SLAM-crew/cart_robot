@@ -1,6 +1,21 @@
 # Mobile robot
 
-- You need `robot_localization` package locally
+- You need `robot_localization` installed in your workspace
 ```
 git clone -b noetic-devel https://github.com/cra-ros-pkg/robot_localization.git
+```
+
+- You need `orb_slam2_ros` installed in your workspace
+```
+git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
+```
+
+- Install all required dependencies. Run it from your catkin folder.
+```
+sh src/my_robot_simulation_control/install_dependencies.sh
+```
+
+- Build it
+```
+catkin build
 ```
