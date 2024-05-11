@@ -13,6 +13,12 @@
 
     <include file="$(find my_robot_simulation_control)/launch/orb_slam2.launch" />
 
+    <node name="octomap" pkg="octomap_server" type="octomap_server_node">
+        <param name="frame_id" value="map"/>
+        <param name="resolution" value=".01"/>
+        <remap from="/cloud_in" to="/orb_slam2_mono/map_points"/>
+    </node>
+
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <!-- don't forget to select the world to run! -->
         <arg name="world_name" value="$(find my_robot_simulation_control)/worlds/inspection.world"/>

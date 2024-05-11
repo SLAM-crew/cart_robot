@@ -10,6 +10,11 @@ git clone -b noetic-devel https://github.com/cra-ros-pkg/robot_localization.git
 git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
 ```
 
+- You need `octomap_mapping` installed in your workspace
+```
+git clone -b kinetic-devel https://github.com/OctoMap/octomap_mapping.git
+```
+
 - Install all required dependencies. Run it from your catkin folder.
 ```
 sh src/my_robot_simulation_control/install_dependencies.sh
