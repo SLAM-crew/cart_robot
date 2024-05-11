@@ -10,7 +10,7 @@
                 <geometry>
                     <cylinder length="${l}" radius="${r}"/>
                 </geometry>
-                <material name="red"/>
+                <material name="black"/>
             </visual>
 
             <xacro:inertial_cylinder mass="5" length="${l}" radius="${r}">
