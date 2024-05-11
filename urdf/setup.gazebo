@@ -1,26 +1,24 @@
 <?xml version="1.0"?>
 <robot>
-
-
-        <!-- SET COLORS FOR GAZEBO -->
+    <!-- SET COLORS FOR GAZEBO -->
     <gazebo reference="base_link">
-        <material>Gazebo/Black</material>
+        <material>Gazebo/White</material>
     </gazebo>
 
     <gazebo reference="wheel_up_left_link">
-        <material>Gazebo/Green</material>
+        <material>Gazebo/Black</material>
     </gazebo>
 
     <gazebo reference="wheel_up_right_link">
-        <material>Gazebo/Green</material>
+        <material>Gazebo/Black</material>
     </gazebo>
 
         <gazebo reference="wheel_down_left_link">
-        <material>Gazebo/Red</material>
+        <material>Gazebo/Black</material>
     </gazebo>
 
     <gazebo reference="wheel_down_right_link">
-        <material>Gazebo/Red</material>
+        <material>Gazebo/Black</material>
     </gazebo>
 
     <gazebo reference="camera">
@@ -72,7 +70,7 @@
     <gazebo reference="lidar">
         <sensor type="ray" name="lidar_main">
         <pose>0 0 0 0 0 0</pose>
-        <visualize>true</visualize>
+        <visualize>false</visualize>
         <update_rate>40</update_rate>
         <ray>
             <scan>
@@ -106,7 +104,7 @@
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
       <update_rate>100</update_rate>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <topic>__default_topic__</topic>
 
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
