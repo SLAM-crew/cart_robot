@@ -11,7 +11,11 @@
         <remap from="/odometry/filtered" to="/odom" />
     </node>
 
-    <include file="$(find my_robot_simulation_control)/launch/orb_slam2.launch" />
+    <node name="orb_slam2_mono" pkg="orb_slam2_ros" type="orb_slam2_ros_mono">
+        <rosparam command="load" subst_value="true" file="$(find my_robot_simulation_control)/config/orb_slam2.yaml"/>
+        <remap from="/camera/image_raw" to="/cart_robot/camera_main/image_raw" />
+        <remap from="/camera/camera_info" to="/cart_robot/camera_main/camera_info" />
+    </node>
 
     <node name="octomap" pkg="octomap_server" type="octomap_server_node">
         <param name="frame_id" value="map"/>
@@ -20,7 +24,6 @@
     </node>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <!-- don't forget to select the world to run! -->
         <arg name="world_name" value="$(find my_robot_simulation_control)/worlds/inspection.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
