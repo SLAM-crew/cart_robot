@@ -1,0 +1,27 @@
+# Configuration for orb_slam2_ros
+
+publish_pointcloud: true
+publish_pose: true
+localize_only: false
+reset_map: false
+
+# static parameters
+load_map: false
+map_file: map.bin
+voc_file: $(find orb_slam2_ros)/orb_slam2/Vocabulary/ORBvoc.txt
+
+pointcloud_frame_id: map
+camera_frame_id: camera
+min_num_kf_in_map: 5
+
+# ORB parameters
+/ORBextractor/nFeatures: 2000
+/ORBextractor/scaleFactor: 1.2
+/ORBextractor/nLevels: 8
+/ORBextractor/iniThFAST: 20
+/ORBextractor/minThFAST: 7
+
+# Camera parameters
+camera_fps: 30
+camera_rgb_encoding: true
+load_calibration_from_cam: true

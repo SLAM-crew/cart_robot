@@ -7,18 +7,14 @@
 <xacro:include filename="$(find my_robot_simulation_control)/urdf/inertial.urdf.xacro" />
 <xacro:include filename="$(find my_robot_simulation_control)/urdf/setup.gazebo" />
 
-<!-- cart_robot -->
 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-
-    <link name="base_footprint"/>
-    <joint name="base_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="0 0 0.0102"/>
-        <parent link="base_footprint"/>
+    <link name="dummy_link"/>
+    <joint name="dummy_joint" type="fixed">
+        <parent link="dummy_link"/>
         <child link="base_link"/>
     </joint>
 
     <link name='base_link'>
-
         <visual name='base_visual'>
         <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/> 
         <geometry>
@@ -37,7 +33,6 @@
                     <box size="0.5 0.25 0.15"/>
                 </geometry>
         </collision>
-
     </link>
 
     <link name='camera'>
@@ -65,6 +60,7 @@
             <material name="blue"/>
         </visual>
     </link>
+    
     <joint name="lidar_joint" type="fixed">
         <origin xyz="0.10 0 0.15" rpy="0 0 1.570796"/>
         <child link="lidar"/>
@@ -101,6 +97,4 @@
     
     <xacro:wheel side="down_left" x="0.25" y="0.125" z="0" signY="1" signX="-1" r = "0.055" l = "0.044" /> 
     <xacro:wheel side="down_right" x="0.25" y="0.125" z="0" signY="-1" signX="-1" r = "0.055" l = "0.044" /> 
-
-    
 </robot>
