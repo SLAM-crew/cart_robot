@@ -23,7 +23,7 @@
         <material name="white"/>
         </visual>
         
-        <xacro:inertial_box mass="2" x="0.5" y="0.25" z="0.15" >
+        <xacro:inertial_box mass="5" x="0.5" y="0.25" z="0.15" >
             <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
         </xacro:inertial_box>
 

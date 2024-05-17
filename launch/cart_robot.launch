@@ -41,4 +41,9 @@
 
     <node name="cart_robot_control" pkg="my_robot_simulation_control" type="cart_robot_control.py" ns="cart_robot"/>
 
+    <node name="move_node" pkg="my_robot_simulation_control" type="move.py" ns="cart_robot"/>
+
+    <!-- Load the parameters for the move_base package -->
+    <rosparam file="$(find my_robot_simulation_control)/config/move_base_params.yaml" command="load" />
+    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen" />
 </launch>

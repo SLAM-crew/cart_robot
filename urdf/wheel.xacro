@@ -13,7 +13,7 @@
                 <material name="black"/>
             </visual>
 
-            <xacro:inertial_cylinder mass="5" length="${l}" radius="${r}">
+            <xacro:inertial_cylinder mass="10" length="${l}" radius="${r}">
                 <origin xyz="0 0 ${l/2*signY}" rpy="0 0 0"/>
             </xacro:inertial_cylinder>
 
