@@ -17,7 +17,7 @@ git clone -b kinetic-devel https://github.com/OctoMap/octomap_mapping.git
 
 - Install all required dependencies. Run it from your catkin folder.
 ```
-sh src/my_robot_simulation_control/install_dependencies.sh
+sh src/cart_robot/install_dependencies.sh
 ```
 
 - Build it
