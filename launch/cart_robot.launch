@@ -11,11 +11,11 @@
         <remap from="/odometry/filtered" to="/odom" />
     </node>
 
-    <node name="orb_slam2_mono" pkg="orb_slam2_ros" type="orb_slam2_ros_mono">
+    <!-- <node name="orb_slam2_mono" pkg="orb_slam2_ros" type="orb_slam2_ros_mono">
         <rosparam command="load" subst_value="true" file="$(find my_robot_simulation_control)/config/orb_slam2.yaml"/>
         <remap from="/camera/image_raw" to="/cart_robot/camera_main/image_raw" />
         <remap from="/camera/camera_info" to="/cart_robot/camera_main/camera_info" />
-    </node>
+    </node> -->
 
     <node name="octomap" pkg="octomap_server" type="octomap_server_node">
         <param name="frame_id" value="map"/>
@@ -39,7 +39,7 @@
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" args="up_left_wheel_controller up_right_wheel_controller down_left_wheel_controller down_right_wheel_controller joint_state_controller --timeout 60" ns="cart_robot"/>
 
-    <node name="cart_robot_control" pkg="my_robot_simulation_control" type="cart_robot_control.py" ns="cart_robot"/>
+    <!-- <node name="cart_robot_control" pkg="my_robot_simulation_control" type="cart_robot_control.py" ns="cart_robot"/> -->
 
     <node name="move_node" pkg="my_robot_simulation_control" type="move.py" ns="cart_robot"/>
 
