@@ -27,7 +27,7 @@ class detection():
         self.image = image
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        image = imutils.resize(image, width=1000)
+        # image = imutils.resize(image, width=1000)
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image,
                                                            detector.getDictionary(), parameters=detector.getDetectorParameters())
         if len(corners) > 0:

@@ -15,7 +15,7 @@ git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
 git clone -b kinetic-devel https://github.com/OctoMap/octomap_mapping.git
 ```
 
-- Install all required dependencies. Run it from your catkin folder.
+- Install all required dependencies. Run it from your catkin folder
 ```
 sh src/cart_robot/install_dependencies.sh
 ```
@@ -23,4 +23,11 @@ sh src/cart_robot/install_dependencies.sh
 - Build it
 ```
 catkin build
+```
+
+## Generate ArUco markers for Gazebo
+
+- Run it from `cart_robot` folder
+```
+sh generate_gazebo_models.sh
 ```

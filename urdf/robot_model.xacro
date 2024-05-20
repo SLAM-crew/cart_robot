@@ -2,10 +2,10 @@
 <robot name="cart_robot" xmlns:xacro="http://www.ros.org/wiki/xacro" >
 <xacro:property name="side" value="right"/>
 
-<xacro:include filename="$(find my_robot_simulation_control)/urdf/materials.xacro" />
-<xacro:include filename="$(find my_robot_simulation_control)/urdf/wheel.xacro" />
-<xacro:include filename="$(find my_robot_simulation_control)/urdf/inertial.urdf.xacro" />
-<xacro:include filename="$(find my_robot_simulation_control)/urdf/setup.gazebo" />
+<xacro:include filename="$(find cart_robot)/urdf/materials.xacro" />
+<xacro:include filename="$(find cart_robot)/urdf/wheel.xacro" />
+<xacro:include filename="$(find cart_robot)/urdf/inertial.urdf.xacro" />
+<xacro:include filename="$(find cart_robot)/urdf/setup.gazebo" />
 
 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
     <link name="dummy_link"/>

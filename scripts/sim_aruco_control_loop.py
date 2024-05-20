@@ -18,13 +18,9 @@ class Robot_Controller:
 
         self.velocity_msg = Twist()
 
-        # need to be calibrated via GAZEBO world
-        # for prop controller
-        self.angular_p = 0.01 
-        self.linear_p = 0.07
-        # radius before aruco ?
-        self.radius_threshold = 150
-        # angle, error angle ?
+        self.angular_p = 0.005
+        self.linear_p = 0.035
+        self.radius_threshold = 50
         self.theta_precision = 25
         
         
