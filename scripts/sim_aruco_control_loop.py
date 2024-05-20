@@ -12,21 +12,21 @@ class Robot_Controller:
     def __init__(self):
 
         self.bridge = CvBridge()
-        self.image_sub = rospy.Subscriber("/rrbot/camera1/image_raw", Image, self.callback)
-        self.image_pub = rospy.Publisher("image_topic_2", Image)
+        self.image_sub = rospy.Subscriber("/cart_robot/camera_main/image_raw", Image, self.callback)
+        self.image_pub = rospy.Publisher("/aruco_processing", Image,  queue_size=10)
         self.pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
         self.velocity_msg = Twist()
 
-        # self.angular_p = rospy.get_param("aruco_navigation/angular_p")
-        # self.radius_threshold = rospy.get_param("aruco_navigation/radius_threshold")
-        # self.theta_precision = rospy.get_param("aruco_navigation/theta_precision")
-        # self.linear_p = rospy.get_param("aruco_navigation/linear_p")
-
-        self.angular_p = 0.001
+        # need to be calibrated via GAZEBO world
+        # for prop controller
+        self.angular_p = 0.01 
+        self.linear_p = 0.07
+        # radius before aruco ?
         self.radius_threshold = 150
+        # angle, error angle ?
         self.theta_precision = 25
-        self.linear_p = 0.007
+        
         
         self.id = None
        
@@ -37,7 +37,7 @@ class Robot_Controller:
         self.at = ""
 
     def move(self, linear, angular):
-        self.velocity_msg.linear.x = linear
+        self.velocity_msg.linear.x = -1 * linear
         self.velocity_msg.angular.z = angular
         rospy.loginfo("linear velocity " + str(linear))
         rospy.loginfo("angular velocity " + str(angular))
@@ -100,8 +100,6 @@ class Robot_Controller:
                     self.move(self.linear_p * (self.radius_threshold - self.Result[2]), 0)
                     self.at = " CENTER "
                     self.lt = "Move Forward"
-
-                    print("straight")
             else:
 
                 if self.theta_error > 0 and (self.theta_precision > abs(self.theta_error)):
@@ -131,7 +129,7 @@ class Robot_Controller:
 
 
 def main():
-    rospy.init_node("robot controller", anonymous=True)
+    rospy.init_node("robot_aruco_controller", anonymous=True)
     of = Robot_Controller()
     try:
         rospy.spin()

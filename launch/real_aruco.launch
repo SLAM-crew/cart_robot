@@ -1,0 +1,3 @@
+<launch>
+    <node name="cart_robot_aruco" pkg="my_robot_simulation_control" type="real_aruco_control_loop.py" ns="cart_robot"/>
+</launch>

@@ -4,10 +4,6 @@ import imutils
 import cv2
 import math
 
-# arucoDict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_250)
-
-# arucoParams = cv2.aruco.DetectorParameters_create()
-
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters =  cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
@@ -57,7 +53,6 @@ class detection():
 
               
                 self.center = (((topLeft[0] + bottomRight[0]) / 2.0), ((topLeft[1] + bottomRight[1]) / 2.0))
-                # print(self.center)
                 self.markerID1 = markerID
 
                 # print(self.markerID1)
@@ -68,12 +63,3 @@ class detection():
             exit()
 
         return [gray, self.center, self.radius1, self.markerID1, image]
-
-# if __name__== "__main__" :
-#
-#     det = detection()
-#     det1 = det.aruco_detection(cv2.imread("/home/ayan/trying.png"))
-#
-#     cv2.imshow("gray" , det1[0])
-#     print(det1[1])
-#     cv2.waitKey(0)
