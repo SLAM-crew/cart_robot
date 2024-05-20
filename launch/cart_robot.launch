@@ -1,21 +1,21 @@
 <launch>
-    <arg name="rviz_conf_file" default="$(find my_robot_simulation_control)/urdf/rviz_conf.rviz" />
-    <param name="robot_description" command="xacro '$(find my_robot_simulation_control)/urdf/robot_model.xacro'" />
+    <arg name="rviz_conf_file" default="$(find cart_robot)/urdf/rviz_conf.rviz" />
+    <param name="robot_description" command="xacro '$(find cart_robot)/urdf/robot_model.xacro'" />
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
         <param name="publish_frequency" type="double" value="40.0" />
         <remap from="/joint_states" to="/cart_robot/joint_states" />
     </node> 
 
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
-        <rosparam command="load" file="$(find my_robot_simulation_control)/config/ekf_localization.yaml" />
+        <rosparam command="load" file="$(find cart_robot)/config/ekf_localization.yaml" />
         <remap from="/odometry/filtered" to="/odom" />
     </node>
 
-    <!-- <node name="orb_slam2_mono" pkg="orb_slam2_ros" type="orb_slam2_ros_mono">
-        <rosparam command="load" subst_value="true" file="$(find my_robot_simulation_control)/config/orb_slam2.yaml"/>
+    <node name="orb_slam2_mono" pkg="orb_slam2_ros" type="orb_slam2_ros_mono">
+        <rosparam command="load" subst_value="true" file="$(find cart_robot)/config/orb_slam2.yaml"/>
         <remap from="/camera/image_raw" to="/cart_robot/camera_main/image_raw" />
         <remap from="/camera/camera_info" to="/cart_robot/camera_main/camera_info" />
-    </node> -->
+    </node>
 
     <node name="octomap" pkg="octomap_server" type="octomap_server_node">
         <param name="frame_id" value="map"/>
@@ -24,7 +24,7 @@
     </node>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find my_robot_simulation_control)/worlds/bot_world.world"/>
+        <arg name="world_name" value="$(find cart_robot)/worlds/inspection.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
@@ -35,15 +35,13 @@
     <node name="my_robot_model_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
     args="-urdf -param robot_description -model my_robot_model -x 1 -y 1 -z 0.2"/>
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_conf_file)" />
-    <rosparam file="$(find my_robot_simulation_control)/config/diff_control.yaml" command="load"/>
+    <rosparam file="$(find cart_robot)/config/diff_control.yaml" command="load"/>
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" args="up_left_wheel_controller up_right_wheel_controller down_left_wheel_controller down_right_wheel_controller joint_state_controller --timeout 60" ns="cart_robot"/>
 
-    <!-- <node name="cart_robot_control" pkg="my_robot_simulation_control" type="cart_robot_control.py" ns="cart_robot"/> -->
+    <node name="move_node" pkg="cart_robot" type="move.py" ns="cart_robot"/>
+    <node name="aruco_control" pkg="cart_robot" type="sim_aruco_control_loop.py" ns="cart_robot"/>
 
-    <node name="move_node" pkg="my_robot_simulation_control" type="move.py" ns="cart_robot"/>
-
-    <!-- Load the parameters for the move_base package -->
-    <rosparam file="$(find my_robot_simulation_control)/config/move_base_params.yaml" command="load" />
+    <rosparam file="$(find cart_robot)/config/move_base_params.yaml" command="load" />
     <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen" />
 </launch>
