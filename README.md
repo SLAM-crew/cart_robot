@@ -1,5 +1,7 @@
 # Mobile robot
 
+This branch is for real robot
+
 - You need `robot_localization` installed in your workspace
 ```
 git clone -b noetic-devel https://github.com/cra-ros-pkg/robot_localization.git
@@ -22,12 +24,5 @@ sh src/cart_robot/install_dependencies.sh
 
 - Build it
 ```
-catkin build
-```
-
-## Generate ArUco markers for Gazebo
-
-- Run it from `cart_robot` folder
-```
-sh generate_gazebo_models.sh
+catkin build -p 1 -j 1
 ```

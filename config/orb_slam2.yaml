@@ -11,7 +11,7 @@ map_file: map.bin
 voc_file: $(find orb_slam2_ros)/orb_slam2/Vocabulary/ORBvoc.txt
 
 pointcloud_frame_id: map
-camera_frame_id: camera
+camera_frame_id: usb_cam
 min_num_kf_in_map: 5
 
 # ORB parameters

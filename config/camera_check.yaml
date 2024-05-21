@@ -1,0 +1,8 @@
+camera_info_url: file://$(find cart_robot)config/usb_cam.yaml
+video_device: /dev/video0
+image_width: 640
+image_height: 480
+pixel_format: yuyv
+color_format: yuv422p
+camera_frame_id: usb_cam
+io_method: mmap
