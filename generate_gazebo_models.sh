@@ -1,1 +1,0 @@
-python3 gazebo_aruco_models/ar_tags/scripts/generate_markers_model.py -i gazebo_aruco_models/ar_tags/scripts/aruco_images/
