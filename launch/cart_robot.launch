@@ -24,7 +24,7 @@
     </node>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find cart_robot)/worlds/inspection.world"/>
+        <arg name="world_name" value="$(find cart_robot)/worlds/flat.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
@@ -39,9 +39,17 @@
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" args="up_left_wheel_controller up_right_wheel_controller down_left_wheel_controller down_right_wheel_controller joint_state_controller --timeout 60" ns="cart_robot"/>
 
-    <node name="move_node" pkg="cart_robot" type="move.py" ns="cart_robot"/>
-    <node name="aruco_control" pkg="cart_robot" type="sim_aruco_control_loop.py" ns="cart_robot"/>
+    <!-- if we want to control by lidar -->
+    <!-- <node name="cart_robot_control_lidar" pkg="cart_robot" type="cart_robot_control.py" ns="cart_robot"/> -->
+    <!-- if we want to control by aruco -->
+    <!-- <node name="cart_robot_control_aruco" pkg="cart_robot" type="aruco_control_loop.py" ns="cart_robot"/> -->
+    <!-- if we want to control by nav stack: lidar + aruco + imu -->
+    <!-- <node name="cart_robot_control_aruco" pkg="cart_robot" type="nav_control.py" ns="cart_robot"/> -->
 
+
+    <node name="move_node" pkg="cart_robot" type="move.py" ns="cart_robot"/>
+
+    <!-- Load the parameters for the move_base package -->
     <rosparam file="$(find cart_robot)/config/move_base_params.yaml" command="load" />
     <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen" />
 </launch>
