@@ -23,7 +23,7 @@
         <material name="white"/>
         </visual>
         
-        <xacro:inertial_box mass="5" x="0.5" y="0.25" z="0.15" >
+        <xacro:inertial_box mass="10" x="0.5" y="0.25" z="0.15" >
             <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
         </xacro:inertial_box>
 
@@ -37,7 +37,7 @@
 
     <link name='camera'>
         <visual name='camera_visual'>
-        <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+        <origin xyz="0 0 0" rpy=" 0 0 0"/>
         <geometry>
             <box size=".05 .05 .05"/>
         </geometry>
@@ -46,14 +46,14 @@
     </link>
     
     <joint type="fixed" name="camera_joint">
-        <origin xyz="0.10 0 0.15" rpy="0 0 0"/>
+        <origin xyz="0.225 0 0.15" rpy="0 0 0"/>
         <child link="camera"/>
         <parent link="base_link"/>
     </joint>
 
     <link name="lidar">
         <visual name='lidar_visual'>
-            <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <geometry>
                 <box size=".05 .05 .05"/>
             </geometry>
@@ -62,7 +62,7 @@
     </link>
     
     <joint name="lidar_joint" type="fixed">
-        <origin xyz="0.10 0 0.15" rpy="0 0 1.570796"/>
+        <origin xyz="0.225 0 0.15" rpy="0 0 1.570796"/>
         <child link="lidar"/>
         <parent link="base_link"/>
     </joint>
@@ -92,9 +92,9 @@
     <origin xyz="0.25 0 0.1" rpy="0 0 0" />
   </joint>
 
-    <xacro:wheel side="up_left" x="0.25" y="0.125" z="0" signY="1" signX="1" r = "0.055" l = "0.044" /> 
-    <xacro:wheel side="up_right" x="0.25" y="0.125" z="0" signY="-1" signX="1" r = "0.055" l = "0.044" />
+    <xacro:wheel side="up_left" x="0.12" y="0.15" z="0"/> 
+    <xacro:wheel side="up_right" x="0.12" y="-0.15" z="0"/>
     
-    <xacro:wheel side="down_left" x="0.25" y="0.125" z="0" signY="1" signX="-1" r = "0.055" l = "0.044" /> 
-    <xacro:wheel side="down_right" x="0.25" y="0.125" z="0" signY="-1" signX="-1" r = "0.055" l = "0.044" /> 
+    <xacro:wheel side="down_left" x="-0.12" y="0.15" z="0"/> 
+    <xacro:wheel side="down_right" x="-0.12" y="-0.15" z="0"/> 
 </robot>

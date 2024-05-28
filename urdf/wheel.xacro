@@ -1,52 +1,43 @@
 <?xml version='1.0'?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="cart_robot">
-
-    <xacro:macro name="wheel" params="side x y z signY signX r l">
-
-        <link name='wheel_${side}_link'>
-            <visual name='wheel_${side}_visual'>
-
-            <origin xyz="0 0 ${l/2*signY}" rpy="0 0 0"/> 
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:macro name="wheel" params="side x y z">
+    <link name='wheel_${side}'>
+        <visual name='wheel_${side}_visual'>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
+            <geometry>
+                <cylinder length="0.044" radius="0.055"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <xacro:inertial_cylinder mass="1" length="0.044" radius="0.055">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <cylinder length="${l}" radius="${r}"/>
+                    <cylinder radius="0.055" length="0.044"/>
                 </geometry>
-                <material name="black"/>
-            </visual>
+        </collision>
+    </link>
+    <joint name="wheel_${side}_joint" type="continuous">
+        <origin xyz="${x} ${y} ${z}" rpy="${pi/2} 0 ${pi}"/>
+        <child link="wheel_${side}"/>
+        <axis xyz="0 0 1"/>
+        <parent link="base_link"/>
+        <limit effort="50" velocity="100"/>
+        <joint_properties damping="0" friction="0.01"/>
+    </joint>
 
-            <xacro:inertial_cylinder mass="10" length="${l}" radius="${r}">
-                <origin xyz="0 0 ${l/2*signY}" rpy="0 0 0"/>
-            </xacro:inertial_cylinder>
-
-            <collision>
-               <origin xyz="0 0 ${l/2*signY}" rpy="0 0 0"/>
-                <geometry>
-                    <cylinder length="${l}" radius="${r}"/>
-                </geometry>
-            </collision>
-
-        </link>
-        
-        <joint name="wheel_${side}_joint" type="continuous">
-            <origin xyz="${x*signX} ${y*signY} ${-0.15/2}" rpy="1.57 0 0"/>
-            <axis xyz="0 0 1" />
-            <limit effort="50" velocity="100"/>
-            <joint_properties damping="0.5" friction="0.1"/>
-
-            <child link="wheel_${side}_link"/>
-            <parent link="base_link"/>
+    <transmission name="wheel_${side}_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="wheel_${side}_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         </joint>
+        <actuator name="wheel_${side}_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
 
-
-        <transmission name="wheel_${side}_trans">
-            <type>transmission_interface/SimpleTransmission</type>
-            <joint name="wheel_${side}_joint">
-                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            </joint>
-            <actuator name="wheel_${side}_motor">
-                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-                <mechanicalReduction>1</mechanicalReduction>
-            </actuator>
-        </transmission>
-
-    </xacro:macro>
+</xacro:macro>
 </robot>

@@ -1,0 +1,7 @@
+image_transport: compressed
+publish_images: true
+fiducial_len: 0.14
+dictionary: 2
+do_pose_estimation: true
+vis_msgs: false
+verbose: false

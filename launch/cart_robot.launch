@@ -5,51 +5,39 @@
         <param name="publish_frequency" type="double" value="40.0" />
         <remap from="/joint_states" to="/cart_robot/joint_states" />
     </node> 
-
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
         <rosparam command="load" file="$(find cart_robot)/config/ekf_localization.yaml" />
         <remap from="/odometry/filtered" to="/odom" />
     </node>
-
     <node name="orb_slam2_mono" pkg="orb_slam2_ros" type="orb_slam2_ros_mono">
         <rosparam command="load" subst_value="true" file="$(find cart_robot)/config/orb_slam2.yaml"/>
         <remap from="/camera/image_raw" to="/cart_robot/camera_main/image_raw" />
         <remap from="/camera/camera_info" to="/cart_robot/camera_main/camera_info" />
     </node>
-
     <node name="octomap" pkg="octomap_server" type="octomap_server_node">
         <param name="frame_id" value="map"/>
         <param name="resolution" value=".01"/>
         <remap from="/cloud_in" to="/orb_slam2_mono/map_points"/>
     </node>
-
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find cart_robot)/worlds/flat.world"/>
+        <arg name="world_name" value="$(find cart_robot)/worlds/inspection.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
         <arg name="headless" value="false"/>
         <arg name="debug" value="false"/>
     </include>
-
     <node name="my_robot_model_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
     args="-urdf -param robot_description -model my_robot_model -x 1 -y 1 -z 0.2"/>
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_conf_file)" />
-    <rosparam file="$(find cart_robot)/config/diff_control.yaml" command="load"/>
-    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" args="up_left_wheel_controller up_right_wheel_controller down_left_wheel_controller down_right_wheel_controller joint_state_controller --timeout 60" ns="cart_robot"/>
-
-    <!-- if we want to control by lidar -->
-    <!-- <node name="cart_robot_control_lidar" pkg="cart_robot" type="cart_robot_control.py" ns="cart_robot"/> -->
-    <!-- if we want to control by aruco -->
-    <!-- <node name="cart_robot_control_aruco" pkg="cart_robot" type="aruco_control_loop.py" ns="cart_robot"/> -->
-    <!-- if we want to control by nav stack: lidar + aruco + imu -->
-    <!-- <node name="cart_robot_control_aruco" pkg="cart_robot" type="nav_control.py" ns="cart_robot"/> -->
-
-
-    <node name="move_node" pkg="cart_robot" type="move.py" ns="cart_robot"/>
-
-    <!-- Load the parameters for the move_base package -->
+    <node pkg="aruco_detect" name="aruco_detect"
+        type="aruco_detect" output="screen" respawn="false">
+        <rosparam command="load" file="$(find cart_robot)/config/aruco_detect.yaml" />
+        <remap from="camera/compressed" to="cart_robot/camera_main/image_raw/compressed"/>
+        <remap from="camera_info" to="cart_robot/camera_main/camera_info"/>
+    </node>
+    <node name="convert_msgs_node" pkg="cart_robot" type="convert_msgs.py" ns="cart_robot"/>
+    <!-- Load the parameters for the move_base package 
     <rosparam file="$(find cart_robot)/config/move_base_params.yaml" command="load" />
-    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen" />
+    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen" />-->
 </launch>
