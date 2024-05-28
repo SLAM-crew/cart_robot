@@ -30,10 +30,21 @@
     </gazebo>
 
     <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/cart_robot</robotNamespace>
-            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-        </plugin>
+      <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+        <updateRate>100.0</updateRate>
+        <robotNamespace>/</robotNamespace>
+        <leftFrontJoint>wheel_up_left_joint</leftFrontJoint>
+        <rightFrontJoint>wheel_up_right_joint</rightFrontJoint>
+        <leftRearJoint>wheel_down_left_joint</leftRearJoint>
+        <rightRearJoint>wheel_down_right_joint</rightRearJoint>
+        <wheelSeparation>0.25</wheelSeparation>
+        <wheelDiameter>0.11</wheelDiameter>
+        <robotBaseFrame>base_link</robotBaseFrame>
+        <torque>2000</torque>
+        <topicName>cmd_vel</topicName>
+        <broadcastTF>false</broadcastTF>
+        <publishOdom>false</publishOdom>
+      </plugin>
     </gazebo>
 
         <gazebo reference="camera">

@@ -15,6 +15,11 @@ git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
 git clone -b kinetic-devel https://github.com/OctoMap/octomap_mapping.git
 ```
 
+- You need `aruco_detect` installed in your workspace
+```
+git clone https://github.com/UbiquityRobotics/fiducials.git
+```
+
 - Install all required dependencies. Run it from your catkin folder
 ```
 sh src/cart_robot/install_dependencies.sh
