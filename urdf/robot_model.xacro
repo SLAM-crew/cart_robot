@@ -8,12 +8,6 @@
 <xacro:include filename="$(find cart_robot)/urdf/setup.gazebo" />
 
 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-    <link name="dummy_link"/>
-    <joint name="dummy_joint" type="fixed">
-        <parent link="dummy_link"/>
-        <child link="base_link"/>
-    </joint>
-
     <link name='base_link'>
         <visual name='base_visual'>
         <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/> 
