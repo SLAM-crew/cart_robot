@@ -5,7 +5,7 @@
         <param name="publish_frequency" type="double" value="40.0" />
         <remap from="/joint_states" to="/cart_robot/joint_states" />
     </node> 
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
         <rosparam command="load" file="$(find cart_robot)/config/ekf_localization.yaml" />
         <remap from="/odometry/filtered" to="/odom" />
     </node>
@@ -37,7 +37,8 @@
         <remap from="camera_info" to="cart_robot/camera_main/camera_info"/>
     </node>
     <node name="convert_msgs_node" pkg="cart_robot" type="convert_msgs.py" ns="cart_robot"/>
-    <!-- Load the parameters for the move_base package 
-    <rosparam file="$(find cart_robot)/config/move_base_params.yaml" command="load" />
-    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen" />-->
+    <!-- Load the parameters for the move_base package
+    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen" >
+        <rosparam file="$(find cart_robot)/config/move_base_params.yaml" command="load" />
+    </node> -->
 </launch>
