@@ -14,10 +14,8 @@
         <remap from="/camera/image_raw" to="/cart_robot/camera_main/image_raw" />
         <remap from="/camera/camera_info" to="/cart_robot/camera_main/camera_info" />
     </node>
-    <node name="octomap" pkg="octomap_server" type="octomap_server_node">
-        <param name="frame_id" value="map"/>
-        <param name="resolution" value=".01"/>
-        <remap from="/cloud_in" to="/orb_slam2_mono/map_points"/>
+    <node name="gmapping" pkg="gmapping" type="slam_gmapping">
+        <remap from="/scan" to="/cart_robot/lidar_main"/>
     </node>
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(find cart_robot)/worlds/inspection.world"/>
@@ -37,8 +35,11 @@
         <remap from="camera_info" to="cart_robot/camera_main/camera_info"/>
     </node>
     <node name="convert_msgs_node" pkg="cart_robot" type="convert_msgs.py" ns="cart_robot"/>
-    <!-- Load the parameters for the move_base package
     <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen" >
-        <rosparam file="$(find cart_robot)/config/move_base_params.yaml" command="load" />
-    </node> -->
+        <rosparam file="$(find cart_robot)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+        <rosparam file="$(find cart_robot)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find cart_robot)/config/move_base/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find cart_robot)/config/move_base/global_costmap_params.yaml" command="load" /> 
+        <rosparam file="$(find cart_robot)/config/move_base/base_local_planner_params.yaml" command="load" />
+    </node>
 </launch>

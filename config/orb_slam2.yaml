@@ -11,7 +11,6 @@ map_file: map.bin
 voc_file: $(find orb_slam2_ros)/orb_slam2/Vocabulary/ORBvoc.txt
 
 pointcloud_frame_id: map
-target_frame_id: odom
 camera_frame_id: camera
 min_num_kf_in_map: 5
 
